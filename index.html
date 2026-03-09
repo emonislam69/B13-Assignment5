@@ -11,3 +11,91 @@
 </head>
 
 <body>
+    <div id="auth-screen" class="view-panel">
+        <div class="auth-wrapper">
+            <div class="brand-logo">
+                <i class="fab fa-github" style="font-size: 50px; color: #333; margin-bottom: 10px;"></i>
+            </div>
+            <h2>GitHub Issues Tracker</h2>
+            <p style="color: #666; margin-bottom: 20px;">Sign in to manage your issues</p>
+
+            <form id="auth-form-submit">
+                <div class="field-group">
+                    <label>Username</label>
+                    <input type="text" id="field-user" placeholder="Enter Username" required>
+                    <small>Default: admin</small>
+                </div>
+                <div class="field-group">
+                    <label>Password</label>
+                    <input type="password" id="field-pass" placeholder="Enter Password" required>
+                    <small>Default: admin123</small>
+                </div>
+                <button type="submit" class="action-btn-main">Sign In</button>
+            </form>
+
+            <div class="demo-info-area">
+                <div class="divider-line">OR</div>
+                <p>Demo Credentials:</p>
+                <div class="creds-display">
+                    <p><strong>Username:</strong> admin <br><strong>Password:</strong> admin123</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="dashboard-screen" class="view-panel hidden-item">
+        <nav class="top-navigation">
+            <div class="nav-brand-box">
+                <i class="fab fa-github"></i>
+                <span class="brand-text">GitHub Issues Tracker</span>
+            </div>
+            <div class="nav-actions-box">
+                <div class="search-box-wrapper">
+                    <i class="fas fa-search glass-icon"></i>
+                    <input type="text" id="query-input" placeholder="Search issues...">
+                </div>
+                <button class="btn-add-ticket">+ New Issue</button>
+            </div>
+        </nav>
+
+        <main class="main-content-area">
+            <div class="filter-tabs-wrapper">
+                <div class="filter-group">
+                    <button class="filter-trigger active-tab" data-filter="all">All</button>
+                    <button class="filter-trigger" data-filter="open">Open</button>
+                    <button class="filter-trigger" data-filter="closed">Closed</button>
+                </div>
+            </div>
+
+            <div class="stat-summary-box">
+                <div class="stat-left-side">
+                    <div class="stat-avatar-ring">
+                        <img src="./assets/Aperture.png" alt="" class="stat-img-circle">
+                    </div>
+                    <div>
+                        <h3 id="ticket-total-count">0 Issues</h3>
+                        <p>Track and manage your project issues</p>
+                    </div>
+                </div>
+                <div class="stat-right-side">
+                    <span><span class="indicator-dot open-dot"></span> Open</span>
+                    <span><span class="indicator-dot closed-dot"></span> Closed</span>
+                </div>
+            </div>
+
+            <div id="loading-spinner" class="spinner-ui hidden-item"></div>
+
+            <div id="ticket-display-grid" class="ticket-display-grid">
+            </div>
+        </main>
+    </div>
+
+    <div id="ticket-detail-modal" class="popup-overlay hidden-item">
+        <div class="popup-box">
+            <div id="popup-content-area">
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
