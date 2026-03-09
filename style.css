@@ -446,3 +446,5 @@ body {
     margin: 50px auto; 
 }
 @keyframes rotating { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+
+@media (max-width: 576px) { .ticket-display-grid { grid-template-columns: 1fr; } .top-navigation { flex-direction: column; gap: 15px; } .search-box-wrapper { width: 100%; } }
