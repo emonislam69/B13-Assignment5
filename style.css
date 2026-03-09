@@ -1,0 +1,27 @@
+:root {
+    --primary-color: #4A00FF;
+    --bg-color: #F8F9FB;
+    --text-dark: #1E293B;
+    --text-light: #64748B;
+    --border-color: #E2E8F0;
+    --open-color: #00A96E;
+    --closed-color: #A855F7;
+    --tag-bg: #FFF1F2;
+    --tag-text: #E11D48;
+    --tag-border: #FECACA;
+    --medium-bg: #FEF3C7;
+    --medium-text: #D97706;
+    --medium-border: #FDE68A;
+}
+
+* { 
+    margin: 0; 
+    padding: 0; 
+    box-sizing: border-box; 
+    font-family: 'Geist'; 
+}
+
+body { 
+    background-color: var(--bg-color); 
+    color: var(--text-dark); 
+}
