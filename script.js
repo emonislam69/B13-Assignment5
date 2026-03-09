@@ -66,4 +66,77 @@ function renderTickets(tickets) {
         `;
         ticketGrid.appendChild(cardElement);
     });
+}async function openDetailModal(id) {
+    toggleSpinner(true);
+    try {
+        const res = await fetch(`https://phi-lab-server.vercel.app/api/v1/lab/issue/${id}`);
+        const json = await res.json();
+        const issue = json.data;
+        
+        const dateStr = new Date(issue.createdAt).toLocaleDateString('en-GB');
+
+        const tagsHTML = issue.labels.map((label, index) => {
+            let icon = label.toLowerCase().includes('bug') ? 'fa-bug' : 'fa-hand-holding-heart';
+            const styleClass = index === 1 ? 'tag-style-alt' : '';
+            return `<span class="tag-item ${styleClass}"><i class="fas ${icon}"></i> ${label.toUpperCase()}</span>`;
+        }).join('');
+
+        popupBody.innerHTML = `
+            <h2 class="popup-heading">${issue.title}</h2>
+            
+            <div class="popup-sub-info">
+                <span class="status-capsule">${issue.status.charAt(0).toUpperCase() + issue.status.slice(1)}</span>
+                <span> • Opened by ${issue.author} • ${dateStr}</span>
+            </div>
+
+            <div class="popup-tags-row">
+                ${tagsHTML}
+            </div>
+
+            <p class="popup-body-desc">${issue.description}</p>
+
+            <div class="popup-details-grid">
+                <div class="detail-item">
+                    <label>Assignee:</label>
+                    <span>${issue.author}</span>
+                </div>
+                <div class="detail-item">
+                    <label>Priority:</label>
+                    <span class="prio-capsule-high">${issue.priority.toUpperCase()}</span>
+                </div>
+            </div>
+
+            <div class="popup-footer-actions">
+                <button class="btn-dismiss-large" onclick="closePopup()">Close</button>
+            </div>
+        `;
+        popupModal.classList.remove('hidden-item');
+    } finally { toggleSpinner(false); }
 }
+
+function closePopup() { popupModal.classList.add('hidden-item'); }
+function toggleSpinner(isVisible) { isVisible ? spinner.classList.remove('hidden-item') : spinner.classList.add('hidden-item'); }
+
+
+queryInput.addEventListener('keypress', async (e) => {
+    if (e.key === 'Enter') {
+        const text = queryInput.value.trim();
+        if (!text) return fetchIssuesData();
+        toggleSpinner(true);
+        try {
+            const res = await fetch(`${SEARCH_URL}${text}`);
+            const json = await res.json();
+            renderTickets(json.data);
+        } finally { toggleSpinner(false); }
+    }
+});
+
+
+filterTriggers.forEach(btn => {
+    btn.addEventListener('click', () => {
+        filterTriggers.forEach(b => b.classList.remove('active-tab'));
+        btn.classList.add('active-tab');
+        const type = btn.dataset.filter;
+        renderTickets(type === 'all' ? allIssuesData : allIssuesData.filter(i => i.status === type));
+    });
+});
